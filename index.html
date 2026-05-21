@@ -3,118 +3,278 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hướng dẫn dùng Google AppSheet cho trung tâm gia sư tiếng Anh</title>
+  <title>Cẩm nang AppSheet cho trung tâm gia sư Giang</title>
   <style>
     :root {
-      --bg: #f7f8fb;
-      --card: #ffffff;
-      --ink: #172033;
-      --muted: #5f6b7a;
-      --brand: #2563eb;
-      --brand-soft: #e8f0ff;
-      --green: #16a34a;
-      --orange: #f97316;
-      --purple: #7c3aed;
-      --red: #dc2626;
-      --border: #e5e7eb;
-      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-      --radius: 20px;
+      --bg: #f7f1e8;
+      --paper: #fffdf8;
+      --panel: #fff7ec;
+      --line: #e5d8c4;
+      --ink: #213547;
+      --muted: #62707f;
+      --brand: #b55422;
+      --brand-soft: #ffe0ce;
+      --green: #2d8a4b;
+      --green-soft: #e8f6ec;
+      --blue: #2d6a9f;
+      --blue-soft: #e7f1fa;
+      --gold: #a77016;
+      --gold-soft: #fff2d8;
+      --danger: #b23a2e;
+      --danger-soft: #ffe4df;
+      --shadow: 0 18px 45px rgba(72, 51, 29, 0.08);
+      --radius: 24px;
+      --radius-sm: 16px;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
       color: var(--ink);
-      background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 320px);
-      line-height: 1.6;
+      line-height: 1.65;
+      background:
+        radial-gradient(circle at top right, rgba(255, 229, 203, 0.9), transparent 28%),
+        linear-gradient(180deg, #fff8ef 0, var(--bg) 320px);
     }
 
-    a { color: var(--brand); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    a {
+      color: var(--brand);
+      text-decoration: none;
+    }
 
-    .container {
-      max-width: 1120px;
+    a:hover {
+      text-decoration: underline;
+    }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      background: #fff0e7;
+      color: #8c3f18;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-size: 0.95em;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-bottom: 1px solid rgba(229, 216, 196, 0.8);
+      background: rgba(255, 250, 243, 0.88);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav-inner {
+      max-width: 1220px;
       margin: 0 auto;
-      padding: 28px 18px 80px;
+      padding: 12px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .nav-title {
+      margin-right: auto;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .nav a {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 13px;
+      border-radius: 999px;
+      color: #445466;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(229, 216, 196, 0.85);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .wrap {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 28px 18px 90px;
     }
 
     .hero {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 24px;
+      grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.8fr);
+      gap: 26px;
       align-items: center;
-      padding: 38px 0 28px;
+      padding: 26px 0 34px;
     }
 
     .badge {
       display: inline-flex;
-      gap: 8px;
       align-items: center;
+      gap: 8px;
       padding: 7px 12px;
       border-radius: 999px;
       background: var(--brand-soft);
       color: var(--brand);
-      font-weight: 700;
       font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      color: #1f2d3a;
+      margin: 0;
     }
 
     h1 {
-      font-size: clamp(34px, 5vw, 58px);
-      line-height: 1.05;
-      margin: 18px 0 14px;
+      font-size: clamp(38px, 5vw, 62px);
+      line-height: 1.04;
       letter-spacing: -0.04em;
+      margin-top: 16px;
+      margin-bottom: 16px;
     }
 
     h2 {
-      font-size: 30px;
-      margin: 44px 0 16px;
-      letter-spacing: -0.025em;
+      font-size: clamp(30px, 4vw, 42px);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
     }
 
     h3 {
-      font-size: 21px;
-      margin: 24px 0 10px;
+      font-size: 24px;
+      line-height: 1.2;
+      margin-bottom: 10px;
     }
 
-    p { margin: 8px 0; color: var(--muted); }
+    p {
+      margin: 8px 0;
+      color: var(--muted);
+    }
 
-    .hero-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
+    .hero p {
+      font-size: 18px;
+      max-width: 760px;
+    }
+
+    .hero-side,
+    .card,
+    .panel,
+    .phone,
+    .mini-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 24px;
+      box-shadow: var(--shadow);
     }
 
-    .quick-list {
+    .hero-side {
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-side::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255, 224, 206, 0.75), rgba(255, 224, 206, 0));
+    }
+
+    .hero-grid {
       display: grid;
       gap: 12px;
-      margin-top: 18px;
+      margin-top: 16px;
+      position: relative;
+      z-index: 1;
     }
 
-    .quick-item {
+    .hero-item {
       display: flex;
       gap: 12px;
       align-items: flex-start;
-      padding: 12px;
-      background: #f8fafc;
-      border-radius: 14px;
-      border: 1px solid var(--border);
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      background: #fffaf3;
+      border: 1px solid #efe3d0;
     }
 
-    .num {
-      width: 28px;
-      height: 28px;
-      flex: 0 0 28px;
+    .hero-num {
+      width: 32px;
+      height: 32px;
+      flex: 0 0 32px;
       border-radius: 50%;
-      background: var(--brand);
-      color: #fff;
       display: grid;
       place-items: center;
+      background: var(--brand);
+      color: #fff;
+      font-size: 15px;
       font-weight: 800;
-      font-size: 14px;
+    }
+
+    .highlight,
+    .note,
+    .warning,
+    .success {
+      padding: 18px 20px;
+      border-radius: var(--radius-sm);
+      margin-top: 18px;
+      border: 1px solid var(--line);
+    }
+
+    .highlight {
+      background: linear-gradient(135deg, #fff4ea, #fffaf4);
+      border-left: 6px solid var(--brand);
+    }
+
+    .note {
+      background: var(--blue-soft);
+      border-left: 6px solid var(--blue);
+    }
+
+    .warning {
+      background: var(--gold-soft);
+      border-left: 6px solid var(--gold);
+    }
+
+    .success {
+      background: var(--green-soft);
+      border-left: 6px solid var(--green);
+    }
+
+    .section {
+      margin-top: 48px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--brand);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
     }
 
     .grid {
@@ -122,591 +282,1229 @@
       gap: 18px;
     }
 
-    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px;
-      box-shadow: var(--shadow);
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .role {
-      border-left: 6px solid var(--brand);
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .role.teacher { border-left-color: var(--green); }
-    .role.owner { border-left-color: var(--purple); }
-
-    .label {
-      font-size: 13px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--brand);
-      margin-bottom: 8px;
+    .card,
+    .panel {
+      padding: 24px;
     }
 
-    .teacher .label { color: var(--green); }
-    .owner .label { color: var(--purple); }
-
-    ul, ol {
+    .checklist,
+    .steps,
+    .tight-list {
+      margin: 12px 0 0;
       padding-left: 22px;
-      margin: 10px 0 0;
     }
 
-    li { margin: 7px 0; color: var(--muted); }
-
-    .table-wrap {
-      overflow-x: auto;
-      background: var(--card);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
+    .checklist li,
+    .steps li,
+    .tight-list li {
+      margin: 9px 0;
+      color: var(--muted);
     }
 
-    table {
+    .inline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: #fff7ef;
+      border: 1px solid #ecd8c2;
+      color: #5a4c42;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .info-table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 760px;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      box-shadow: var(--shadow);
     }
 
-    th, td {
+    .info-table th,
+    .info-table td {
       padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--line);
       text-align: left;
       vertical-align: top;
     }
 
-    th {
-      background: #f8fafc;
+    .info-table th {
+      background: #fff6ed;
+      color: #445466;
       font-size: 14px;
-      color: #334155;
     }
 
-    td { color: var(--muted); }
+    .info-table td {
+      color: var(--muted);
+    }
 
-    .pill {
-      display: inline-block;
-      padding: 4px 9px;
-      border-radius: 999px;
-      background: #f1f5f9;
-      color: #334155;
+    .phone {
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+      padding: 12px;
+      border-radius: 30px;
+      background: linear-gradient(180deg, #223244, #101d2a);
+      color: #233240;
+    }
+
+    .screen {
+      min-height: 580px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #f8f5ef;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .screen.small {
+      min-height: 470px;
+    }
+
+    .statusbar {
+      padding: 12px 16px 10px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #677687;
+      background: #f2ede3;
+      border-bottom: 1px solid #e1d8ca;
+    }
+
+    .appbar {
+      padding: 16px;
+      background: #fffdf9;
+      border-bottom: 1px solid #eadfce;
+    }
+
+    .appbar strong {
+      display: block;
+      font-size: 18px;
+      color: #203343;
+    }
+
+    .appbar span {
       font-size: 13px;
-      font-weight: 700;
+      color: #738293;
     }
 
-    .flow {
+    .screen-body {
+      padding: 16px;
       display: grid;
       gap: 12px;
-      counter-reset: step;
     }
 
-    .step {
-      position: relative;
-      background: var(--card);
-      border: 1px solid var(--border);
+    .mock-row,
+    .mock-card,
+    .mock-input,
+    .mock-pill,
+    .mock-button,
+    .mock-student {
       border-radius: 16px;
-      padding: 16px 16px 16px 58px;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
     }
 
-    .step::before {
-      counter-increment: step;
-      content: counter(step);
-      position: absolute;
-      left: 16px;
-      top: 16px;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--brand);
-      color: #fff;
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-    }
-
-    .warning {
-      background: #fff7ed;
-      border: 1px solid #fed7aa;
-      border-left: 6px solid var(--orange);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      margin: 18px 0;
-    }
-
-    .success {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-left: 6px solid var(--green);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      margin: 18px 0;
-    }
-
-    .code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      background: #0f172a;
-      color: #e2e8f0;
+    .mock-card {
       padding: 14px;
-      border-radius: 14px;
-      overflow-x: auto;
-      font-size: 14px;
-      line-height: 1.5;
+      background: #fff;
+      border: 1px solid #eadfce;
+      box-shadow: 0 10px 20px rgba(31, 45, 58, 0.05);
     }
 
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
+    .mock-card h4 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      color: #203343;
     }
 
-    .nav-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 10px 18px;
+    .mock-card p {
+      margin: 0;
+      font-size: 13px;
+      color: #738293;
+    }
+
+    .mock-row {
       display: flex;
-      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .mock-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
     }
 
-    .nav a {
-      padding: 8px 11px;
-      border-radius: 999px;
-      background: #f8fafc;
-      color: #334155;
+    .mock-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 12px;
+      background: var(--brand);
+      color: #fff;
+      border: none;
       font-size: 14px;
       font-weight: 700;
+      text-align: center;
+    }
+
+    .mock-button.alt {
+      background: #f3eadf;
+      color: #3d4b5a;
+      border: 1px solid #e2d2be;
+    }
+
+    .mock-input {
+      padding: 12px 14px;
+      background: #fff;
+      border: 1px solid #dfd4c2;
+      color: #5d6d7c;
+      font-size: 13px;
+    }
+
+    .mock-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 10px;
+      min-height: 34px;
+      font-size: 12px;
+      font-weight: 800;
+      background: #fff4ea;
+      border: 1px solid #eed4bf;
+      color: #8c4a21;
+    }
+
+    .mock-pill.good {
+      background: #ecf8ef;
+      border-color: #c7e4d0;
+      color: #2c7d47;
+    }
+
+    .mock-pill.blue {
+      background: #edf5fd;
+      border-color: #c7dcef;
+      color: #2d6a9f;
+    }
+
+    .mock-pill.red {
+      background: #ffeae7;
+      border-color: #f2c8c1;
+      color: #b23a2e;
+    }
+
+    .mock-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mock-student {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      background: #fff;
+      border: 1px solid #eadfce;
+      align-items: center;
+    }
+
+    .mock-student strong {
+      display: block;
+      font-size: 14px;
+      color: #203343;
+    }
+
+    .mock-student span {
+      font-size: 12px;
+      color: #738293;
+    }
+
+    .screen-footer {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      padding: 12px 14px 16px;
+      border-top: 1px solid #eadfce;
+      background: #fffdf9;
+    }
+
+    .screen-footer div {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #7a8794;
+    }
+
+    .legend {
+      display: grid;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .legend-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .legend-num {
+      width: 24px;
+      height: 24px;
+      flex: 0 0 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--brand);
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+      gap: 18px;
+      align-items: start;
+      margin-top: 20px;
+    }
+
+    .workflow + .workflow {
+      margin-top: 18px;
+    }
+
+    .workflow-copy {
+      padding: 22px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .who {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      background: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    .who.owner {
+      background: var(--brand);
+    }
+
+    .result {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 16px;
+      background: #fffdf7;
+      border: 1px dashed #dcc8b2;
+      color: #566473;
+      font-size: 15px;
+    }
+
+    .owner-plan {
+      display: grid;
+      gap: 14px;
+    }
+
+    .owner-step {
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      padding: 16px;
+      background: #fffdf8;
+      border: 1px solid #eadfce;
+      border-radius: 18px;
+    }
+
+    .owner-step .index {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: #fff;
+      background: var(--brand);
+      font-size: 18px;
+    }
+
+    .faq {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .faq-item {
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: #fffdf8;
+      border: 1px solid #eadfce;
+    }
+
+    .faq-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #223244;
     }
 
     .footer {
-      margin-top: 56px;
-      padding-top: 28px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
+      margin-top: 54px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      color: #6e7b88;
       font-size: 14px;
     }
 
-    @media (max-width: 820px) {
-      .hero, .grid-2, .grid-3 {
+    @media (max-width: 960px) {
+      .hero,
+      .grid.two,
+      .grid.three,
+      .workflow {
         grid-template-columns: 1fr;
       }
 
-      .container { padding-top: 16px; }
-      h2 { font-size: 26px; }
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        padding-top: 18px;
+      }
+
+      .nav-inner {
+        gap: 8px;
+      }
+
+      .nav-title {
+        width: 100%;
+        margin-right: 0;
+      }
+
+      .card,
+      .panel,
+      .workflow-copy {
+        padding: 20px;
+      }
+
+      .phone {
+        max-width: 100%;
+      }
     }
 
     @media print {
-      .nav { display: none; }
-      body { background: #fff; }
-      .card, .hero-card, .table-wrap { box-shadow: none; }
+      .nav {
+        display: none;
+      }
+
+      body {
+        background: #fff;
+      }
+
+      .hero-side,
+      .card,
+      .panel,
+      .phone,
+      .mini-card {
+        box-shadow: none;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="nav">
+  <nav class="nav">
     <div class="nav-inner">
-      <a href="#tong-quan">Tổng quan</a>
-      <a href="#cau-truc">Cấu trúc dữ liệu</a>
+      <div class="nav-title">Cẩm nang AppSheet trung tâm Giang</div>
+      <a href="#bat-dau">Bắt đầu</a>
+      <a href="#cai-app">Cài app</a>
+      <a href="#dang-nhap">Đăng nhập</a>
+      <a href="#man-hinh">Màn hình</a>
+      <a href="#quy-trinh">6 việc cần làm</a>
       <a href="#chu-trung-tam">Chủ trung tâm</a>
-      <a href="#giao-vien">Giáo viên</a>
-      <a href="#6-nghiep-vu">6 nghiệp vụ</a>
-      <a href="#van-hanh">Vận hành hằng tuần</a>
+      <a href="#su-co">Sự cố thường gặp</a>
     </div>
-  </div>
+  </nav>
 
-  <main class="container">
-    <section class="hero" id="tong-quan">
+  <main class="wrap">
+    <section class="hero">
       <div>
-        <span class="badge">Google AppSheet + Google Sheets + Google Drive</span>
-        <h1>Hướng dẫn quản lý trung tâm gia sư tiếng Anh trên một nền tảng</h1>
+        <div class="badge">Bản hướng dẫn cho người ít rành công nghệ</div>
+        <h1>Dùng AppSheet để quản lý trung tâm gia sư từng bước, nhìn hình là làm được</h1>
         <p>
-          Tài liệu này hướng dẫn cách dùng Google AppSheet để quản lý 6 việc:
-          chấm công giáo viên, điểm danh học sinh, giáo án/bài kiểm tra, video/ảnh bài tập về nhà,
-          điểm số/báo cáo cá nhân hóa và tra cứu toàn bộ hồ sơ học viên.
+          Tài liệu này được viết theo kiểu “cầm tay chỉ việc”: bấm vào đâu, màn hình trông như thế nào,
+          khi nào cần chọn ảnh, khi nào cần bấm lưu, và nếu điện thoại hiện thông báo lạ thì xử lý ra sao.
         </p>
-        <div class="success">
-          <strong>Mục tiêu:</strong> giáo viên chỉ cần mở 1 app để thao tác; chủ trung tâm xem được dữ liệu tập trung, không bị rối bởi Zalo, Excel rời rạc hoặc folder Drive lộn xộn.
+        <div class="highlight">
+          <strong>Mục tiêu:</strong> giáo viên và chủ trung tâm chỉ cần mở một app là xử lý đủ 6 việc:
+          chấm công giáo viên, điểm danh học sinh, upload tài liệu, upload ảnh hoặc video bài tập về nhà,
+          nhập điểm và xem báo cáo cá nhân hóa, tra cứu đầy đủ hồ sơ của từng học viên.
+        </div>
+        <div class="inline-tags">
+          <span class="tag">Không cần biết kỹ thuật</span>
+          <span class="tag">Có hình minh họa màn hình</span>
+          <span class="tag">Có hướng dẫn Android, iPhone, máy tính</span>
         </div>
       </div>
 
-      <div class="hero-card">
-        <div class="label">Kết quả sau khi setup</div>
-        <div class="quick-list">
-          <div class="quick-item"><span class="num">1</span><div><strong>App mobile/web</strong><br><p>Giáo viên mở AppSheet để chấm công, điểm danh, upload bài.</p></div></div>
-          <div class="quick-item"><span class="num">2</span><div><strong>Google Sheets là database</strong><br><p>Dữ liệu học viên, lớp, điểm, chuyên cần được lưu tập trung.</p></div></div>
-          <div class="quick-item"><span class="num">3</span><div><strong>Google Drive là kho file</strong><br><p>Giáo án, bài kiểm tra, ảnh/video homework tự nằm trong Drive.</p></div></div>
-          <div class="quick-item"><span class="num">4</span><div><strong>Search học viên</strong><br><p>Gõ tên học viên là xem được hồ sơ, điểm, buổi học, homework, nhận xét.</p></div></div>
+      <aside class="hero-side">
+        <h3>Cách dùng nhanh nếu đang gấp</h3>
+        <div class="hero-grid">
+          <div class="hero-item">
+            <div class="hero-num">1</div>
+            <div>
+              <strong>Mở link app</strong>
+              <p>Link do chủ trung tâm gửi qua Zalo hoặc email. Nên ghim ra màn hình điện thoại.</p>
+            </div>
+          </div>
+          <div class="hero-item">
+            <div class="hero-num">2</div>
+            <div>
+              <strong>Đăng nhập đúng email</strong>
+              <p>Phải dùng đúng email đã được cấp quyền thì mới nhìn thấy dữ liệu lớp của mình.</p>
+            </div>
+          </div>
+          <div class="hero-item">
+            <div class="hero-num">3</div>
+            <div>
+              <strong>Bấm đúng menu công việc</strong>
+              <p>Chấm công, điểm danh, tài liệu, bài tập, điểm số, tra cứu học viên đều tách riêng.</p>
+            </div>
+          </div>
+          <div class="hero-item">
+            <div class="hero-num">4</div>
+            <div>
+              <strong>Thấy nút Lưu thì luôn bấm Lưu</strong>
+              <p>Nếu chưa bấm <code>Save</code> hoặc <code>Lưu</code> thì dữ liệu chưa vào hệ thống.</p>
+            </div>
+          </div>
         </div>
+      </aside>
+    </section>
+
+    <section class="section" id="bat-dau">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Phần 1</div>
+          <h2>Chuẩn bị trước khi đưa tài liệu này cho giáo viên</h2>
+        </div>
+        <p>Tài liệu càng rõ ngay từ đầu thì giáo viên càng ít nhắn hỏi lại.</p>
+      </div>
+
+      <div class="grid two">
+        <div class="card">
+          <h3>4 thông tin nên điền trước</h3>
+          <ol class="steps">
+            <li>Thay <code>LINK_APP_CUA_TRUNG_TAM</code> bằng link AppSheet thật của trung tâm.</li>
+            <li>Thay <code>EMAIL_HO_TRO</code> bằng email hoặc số Zalo của người hỗ trợ.</li>
+            <li>Thay <code>TEN_TRUNG_TAM</code> bằng tên thật để giáo viên không bị nhầm app.</li>
+            <li>Nếu menu trong app đang đặt tên khác, sửa lại tên trong tài liệu cho trùng 100%.</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <h3>Giáo viên cần chuẩn bị gì</h3>
+          <ul class="checklist">
+            <li>Một điện thoại có Internet hoặc Wi-Fi.</li>
+            <li>Tài khoản Google đang đăng nhập được trên điện thoại.</li>
+            <li>Biết mở Zalo hoặc email để bấm vào link app.</li>
+            <li>Cho phép điện thoại dùng Camera, Ảnh và Tệp khi hệ thống hỏi.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Lưu ý rất quan trọng:</strong> hình minh họa trong file này là hình mô phỏng để người ít rành công nghệ dễ làm theo.
+        Giao diện AppSheet thật có thể khác một chút về màu sắc hoặc vị trí, nhưng tên nút và luồng bấm sẽ tương tự.
       </div>
     </section>
 
-    <section id="cau-truc">
-      <h2>1. Cấu trúc nền tảng nên dùng</h2>
-      <div class="grid grid-3">
-        <div class="card">
-          <h3>Google Sheets</h3>
-          <p>Làm nơi lưu dữ liệu chính: học viên, giáo viên, lớp, điểm danh, điểm số, báo cáo.</p>
+    <section class="section" id="cai-app">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Phần 2</div>
+          <h2>Cài app hoặc ghim app ra màn hình điện thoại</h2>
         </div>
-        <div class="card">
-          <h3>Google Drive</h3>
-          <p>Làm nơi lưu file: giáo án, bài kiểm tra, ảnh/video bài tập về nhà.</p>
-        </div>
-        <div class="card">
-          <h3>Google AppSheet</h3>
-          <p>Làm app quản lý duy nhất cho giáo viên và chủ trung tâm.</p>
-        </div>
+        <p>Nếu người dùng không quen công nghệ, nên hướng dẫn họ theo đúng loại máy đang cầm.</p>
       </div>
 
-      <h3>Các sheet cần tạo</h3>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Sheet</th>
-              <th>Mục đích</th>
-              <th>Cột gợi ý</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="pill">Students</span></td>
-              <td>Danh sách học viên</td>
-              <td>student_id, name, class_id, parent_name, parent_phone, status, note</td>
-            </tr>
-            <tr>
-              <td><span class="pill">Teachers</span></td>
-              <td>Danh sách giáo viên</td>
-              <td>teacher_id, name, phone, email, status</td>
-            </tr>
-            <tr>
-              <td><span class="pill">Classes</span></td>
-              <td>Danh sách lớp</td>
-              <td>class_id, class_name, teacher_id, schedule, room, status</td>
-            </tr>
-            <tr>
-              <td><span class="pill">Teacher_Timesheet</span></td>
-              <td>Chấm công giáo viên</td>
-              <td>date, teacher_id, class_id, checkin_time, checkout_time, note</td>
-            </tr>
-            <tr>
-              <td><span class="pill">Attendance</span></td>
-              <td>Điểm danh học sinh</td>
-              <td>date, class_id, student_id, status, reason, teacher_note</td>
-            </tr>
-            <tr>
-              <td><span class="pill">Materials</span></td>
-              <td>Giáo án, bài kiểm tra</td>
-              <td>date, class_id, title, type, file, uploaded_by</td>
-            </tr>
-            <tr>
-              <td><span class="pill">Homework</span></td>
-              <td>Ảnh/video bài tập về nhà</td>
-              <td>date, student_id, class_id, file, teacher_comment, status</td>
-            </tr>
-            <tr>
-              <td><span class="pill">Scores</span></td>
-              <td>Điểm số</td>
-              <td>date, student_id, class_id, skill, score, max_score, comment</td>
-            </tr>
-            <tr>
-              <td><span class="pill">Reports</span></td>
-              <td>Báo cáo cá nhân hóa</td>
-              <td>month, student_id, strengths, weaknesses, action_plan, owner_note</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="grid three">
+        <div class="panel">
+          <h3>Android</h3>
+          <ol class="steps">
+            <li>Mở <strong>CH Play</strong>.</li>
+            <li>Bấm vào ô tìm kiếm ở phía trên.</li>
+            <li>Gõ <code>AppSheet</code>.</li>
+            <li>Bấm đúng ứng dụng <strong>AppSheet</strong>, sau đó bấm <strong>Cài đặt</strong>.</li>
+            <li>Khi cài xong, bấm <strong>Mở</strong>.</li>
+            <li>Nếu trung tâm chỉ gửi link, vẫn có thể bấm link trước rồi chọn mở bằng AppSheet hoặc Chrome.</li>
+          </ol>
+        </div>
+
+        <div class="panel">
+          <h3>iPhone</h3>
+          <ol class="steps">
+            <li>Mở <strong>App Store</strong>.</li>
+            <li>Bấm tab <strong>Search</strong> ở góc dưới.</li>
+            <li>Gõ <code>AppSheet</code>.</li>
+            <li>Bấm <strong>Get</strong> hoặc biểu tượng tải về.</li>
+            <li>Nhập Face ID hoặc mật khẩu nếu máy hỏi.</li>
+            <li>Sau khi cài xong, bấm <strong>Open</strong> để mở app.</li>
+          </ol>
+        </div>
+
+        <div class="panel">
+          <h3>Máy tính</h3>
+          <ol class="steps">
+            <li>Mở trình duyệt Chrome hoặc Safari.</li>
+            <li>Nhập trực tiếp link app, ví dụ <code>LINK_APP_CUA_TRUNG_TAM</code>.</li>
+            <li>Đăng nhập tài khoản Google được cấp quyền.</li>
+            <li>Nếu muốn dùng nhanh về sau, bấm dấu sao hoặc lưu bookmark.</li>
+            <li>Nên dùng Chrome nếu cần upload ảnh, video hoặc file từ máy tính.</li>
+          </ol>
+        </div>
       </div>
 
       <div class="warning">
-        <strong>Nguyên tắc quan trọng:</strong> mỗi học viên, giáo viên, lớp nên có một mã riêng như <b>STU001</b>, <b>TEA001</b>, <b>CLS001</b>. Không dùng tên làm khóa chính vì dễ trùng tên và sai chính tả.
+        <strong>Phân biệt 2 việc rất quan trọng:</strong> điện thoại dùng để <strong>mở app, chấm công, điểm danh, upload file, nhập điểm</strong>.
+        Còn việc <strong>tạo app mới, chỉnh cấu trúc app, thêm bảng dữ liệu, đổi menu, cấp quyền người dùng</strong> nên làm trên
+        <strong>giao diện web của AppSheet bằng máy tính</strong>. Nếu làm trên điện thoại, nhiều nút sẽ không hiện đủ hoặc thao tác rất khó.
+      </div>
+
+      <div class="workflow">
+        <div class="workflow-copy">
+          <div class="who owner">Mẹo cho chủ trung tâm</div>
+          <h3>Nếu không muốn giáo viên phải tự tìm AppSheet</h3>
+          <ol class="steps">
+            <li>Gửi sẵn tin nhắn Zalo gồm 2 dòng: <code>1. Bấm link app</code> và <code>2. Nếu máy hỏi, chọn mở bằng AppSheet</code>.</li>
+            <li>Kèm 1 ảnh chụp màn hình có khoanh đỏ nút cần bấm hoặc dùng ngay hình minh họa trong file này.</li>
+            <li>Sau khi giáo viên mở được app lần đầu, hướng dẫn họ ghim app ra màn hình chính để lần sau chỉ cần chạm một lần.</li>
+          </ol>
+          <div class="result">
+            Người low-tech thường làm tốt hơn nếu họ nhận được đúng 1 link, đúng 1 câu hướng dẫn, đúng 1 hình minh họa.
+          </div>
+        </div>
+
+        <div class="phone">
+          <div class="screen small">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span>Wi-Fi 100%</span>
+            </div>
+            <div class="appbar">
+              <strong>Tìm AppSheet</strong>
+              <span>Ví dụ màn hình tìm trong store</span>
+            </div>
+            <div class="screen-body">
+              <div class="mock-input">Tìm kiếm: AppSheet</div>
+              <div class="mock-card">
+                <h4>AppSheet</h4>
+                <p>Tạo và mở app nội bộ cho công việc</p>
+              </div>
+              <div class="mock-button">Cài đặt / Get</div>
+              <div class="mock-card">
+                <h4>Sau khi cài</h4>
+                <p>Bấm Mở rồi đăng nhập đúng tài khoản Google của giáo viên.</p>
+              </div>
+              <div class="mock-button alt">Mở bằng link của trung tâm</div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section id="chu-trung-tam">
-      <h2>2. Chủ trung tâm cần làm gì?</h2>
-      <div class="grid grid-2">
-        <div class="card role owner">
-          <div class="label">Setup ban đầu</div>
-          <ol>
-            <li>Tạo một Google Sheet tên: <b>English Center Management</b>.</li>
-            <li>Tạo các sheet theo cấu trúc ở phần trên.</li>
-            <li>Vào <a href="https://www.appsheet.com/" target="_blank">AppSheet</a> → chọn <b>Make a new app</b>.</li>
-            <li>Chọn nguồn dữ liệu là Google Sheet vừa tạo.</li>
-            <li>Để AppSheet tự sinh app ban đầu.</li>
-            <li>Kiểm tra từng bảng và chỉnh kiểu dữ liệu: Name, Enum, Ref, File, Image, Video, DateTime.</li>
+    <section class="section" id="dang-nhap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Phần 3</div>
+          <h2>Đăng nhập lần đầu và ghim app để lần sau không bị quên</h2>
+        </div>
+        <p>Phần này nên gửi cho giáo viên mới ngay trước buổi dạy đầu tiên.</p>
+      </div>
+
+      <div class="grid two">
+        <div class="card">
+          <h3>4 bước đăng nhập lần đầu</h3>
+          <ol class="steps">
+            <li>Mở Zalo hoặc email, tìm tin nhắn có <code>LINK_APP_CUA_TRUNG_TAM</code>.</li>
+            <li>Bấm vào link. Máy có thể hỏi mở bằng Chrome, Safari hoặc AppSheet.</li>
+            <li>Chọn tài khoản Google đúng email trung tâm đã cấp quyền.</li>
+            <li>Chờ 5 đến 15 giây để app tải dữ liệu. Khi thấy màn hình trang chủ là đã vào thành công.</li>
           </ol>
         </div>
 
-        <div class="card role owner">
-          <div class="label">Việc làm hằng ngày</div>
-          <ol>
-            <li>Xem danh sách giáo viên đã chấm công.</li>
-            <li>Kiểm tra lớp nào chưa điểm danh.</li>
-            <li>Xem học viên nghỉ nhiều, điểm thấp hoặc chưa nộp bài.</li>
-            <li>Duyệt giáo án/bài kiểm tra giáo viên upload.</li>
-            <li>Cập nhật nhận xét tổng quan vào báo cáo tháng.</li>
-          </ol>
+        <div class="card">
+          <h3>Nếu muốn ghim ra màn hình chính</h3>
+          <ul class="checklist">
+            <li>Trên iPhone: mở app bằng Safari, bấm nút <strong>Share</strong>, kéo xuống chọn <strong>Add to Home Screen</strong>.</li>
+            <li>Trên Android Chrome: bấm dấu <strong>3 chấm</strong>, chọn <strong>Add to Home screen</strong> hoặc <strong>Install app</strong>.</li>
+            <li>Nếu đang dùng app AppSheet cài sẵn, thường chỉ cần giữ biểu tượng và kéo ra màn hình.</li>
+          </ul>
         </div>
       </div>
 
-      <h3>Màn hình chủ trung tâm nên có trong AppSheet</h3>
-      <div class="grid grid-3">
-        <div class="card">
-          <h3>Dashboard tổng quan</h3>
-          <p>Hiển thị số buổi học, số học viên vắng, số bài homework, số báo cáo cần xử lý.</p>
-        </div>
-        <div class="card">
-          <h3>Student Profile</h3>
-          <p>Tra cứu từng học viên và xem toàn bộ lịch sử học tập.</p>
-        </div>
-        <div class="card">
-          <h3>Teacher Timesheet</h3>
-          <p>Xem giáo viên nào đã check-in, checkout, lớp nào đã dạy.</p>
-        </div>
+      <div class="warning">
+        <strong>Nếu màn hình báo “You do not have access”:</strong> người dùng đang đăng nhập sai email hoặc chủ trung tâm chưa share quyền.
+        Đừng cố bấm nhiều lần. Hãy kiểm tra lại đúng tài khoản trước.
       </div>
     </section>
 
-    <section id="giao-vien">
-      <h2>3. Giáo viên cần làm gì?</h2>
-      <div class="grid grid-2">
-        <div class="card role teacher">
-          <div class="label">Trước buổi học</div>
-          <ol>
-            <li>Mở app AppSheet trên điện thoại.</li>
-            <li>Chọn lớp mình dạy hôm nay.</li>
-            <li>Bấm <b>Check-in</b> để chấm công.</li>
-            <li>Mở phần <b>Materials</b> để xem giáo án hoặc bài kiểm tra cần dùng.</li>
-          </ol>
+    <section class="section" id="man-hinh">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Phần 4</div>
+          <h2>Màn hình trang chủ sẽ trông như thế nào</h2>
+        </div>
+        <p>Mỗi menu tương ứng với đúng một việc, nên người dùng không cần nhớ nhiều.</p>
+      </div>
+
+      <div class="workflow">
+        <div class="workflow-copy">
+          <h3>Nhìn vào đâu trước</h3>
+          <div class="legend">
+            <div class="legend-item"><span class="legend-num">1</span><div><strong>Thanh tiêu đề:</strong> cho biết bạn đang ở trong app của trung tâm nào.</div></div>
+            <div class="legend-item"><span class="legend-num">2</span><div><strong>Ô tìm kiếm:</strong> dùng để search nhanh học viên hoặc tài liệu.</div></div>
+            <div class="legend-item"><span class="legend-num">3</span><div><strong>Các ô chức năng:</strong> chấm công, điểm danh, tài liệu, bài tập, điểm số, tra cứu học viên.</div></div>
+            <div class="legend-item"><span class="legend-num">4</span><div><strong>Nút cộng hoặc nút thêm mới:</strong> bấm khi muốn tạo dữ liệu mới.</div></div>
+            <div class="legend-item"><span class="legend-num">5</span><div><strong>Nút Save / Lưu:</strong> rất quan trọng, không bấm là chưa lưu.</div></div>
+          </div>
         </div>
 
-        <div class="card role teacher">
-          <div class="label">Trong và sau buổi học</div>
-          <ol>
-            <li>Vào <b>Attendance</b> để điểm danh học sinh.</li>
-            <li>Nhập điểm nếu có bài kiểm tra.</li>
-            <li>Upload ảnh/video bài tập về nhà của học sinh.</li>
-            <li>Ghi nhận xét ngắn cho học viên cần chú ý.</li>
-            <li>Bấm <b>Checkout</b> sau khi dạy xong.</li>
-          </ol>
+        <div class="phone">
+          <div class="screen">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span>4G 92%</span>
+            </div>
+            <div class="appbar">
+              <strong>TEN_TRUNG_TAM</strong>
+              <span>Trang chủ giáo viên và quản lý</span>
+            </div>
+            <div class="screen-body">
+              <div class="mock-input">Search học viên, phụ huynh, số điện thoại...</div>
+              <div class="mock-grid">
+                <div class="mock-card">
+                  <h4>Chấm công GV</h4>
+                  <p>Check-in và checkout ca dạy</p>
+                </div>
+                <div class="mock-card">
+                  <h4>Điểm danh HS</h4>
+                  <p>Điểm danh từng buổi học</p>
+                </div>
+                <div class="mock-card">
+                  <h4>Tài liệu</h4>
+                  <p>Giáo án và bài kiểm tra</p>
+                </div>
+                <div class="mock-card">
+                  <h4>BTVN</h4>
+                  <p>Ảnh hoặc video bài tập</p>
+                </div>
+                <div class="mock-card">
+                  <h4>Điểm số</h4>
+                  <p>Kết quả theo kỹ năng</p>
+                </div>
+                <div class="mock-card">
+                  <h4>Tra cứu HV</h4>
+                  <p>Hồ sơ và báo cáo học viên</p>
+                </div>
+              </div>
+              <div class="mock-button">+ Thêm mới</div>
+            </div>
+            <div class="screen-footer">
+              <div>Home</div>
+              <div>Danh sách</div>
+              <div>Tìm kiếm</div>
+              <div>Tài khoản</div>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="success">
-        <strong>Quy tắc cho giáo viên:</strong> không gửi ảnh/video homework qua Zalo cá nhân nếu trung tâm đã dùng AppSheet. Tất cả dữ liệu cần đưa vào app để sau này tìm lại được.
+        <strong>Mẹo dạy người low-tech:</strong> đừng nói “vào module attendance” hay “tạo record”.
+        Hãy nói đơn giản: “mở app”, “bấm ô Điểm danh HS”, “chọn lớp”, “bấm Lưu”.
       </div>
     </section>
 
-    <section id="6-nghiep-vu">
-      <h2>4. Hướng dẫn cụ thể cho 6 đầu việc</h2>
-
-      <div class="card">
-        <h3>1. Chấm công giáo viên</h3>
-        <div class="flow">
-          <div class="step"><strong>Giáo viên</strong> mở app → chọn menu <b>Chấm công GV</b>.</div>
-          <div class="step">Chọn lớp đang dạy, bấm <b>Check-in</b>. App tự ghi thời gian.</div>
-          <div class="step">Cuối buổi bấm <b>Checkout</b>.</div>
-          <div class="step"><strong>Chủ trung tâm</strong> xem bảng Teacher_Timesheet để tính công.</div>
+    <section class="section" id="quy-trinh">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Phần 5</div>
+          <h2>Hướng dẫn chi tiết cho 6 việc phải làm trong trung tâm</h2>
         </div>
+        <p>Mỗi phần dưới đây đều có: ai làm, bấm ở đâu, màn hình sẽ thấy gì, và kết quả đúng là gì.</p>
       </div>
 
-      <div class="card">
-        <h3>2. Điểm danh học sinh</h3>
-        <div class="flow">
-          <div class="step"><strong>Giáo viên</strong> chọn lớp hôm nay.</div>
-          <div class="step">App hiện danh sách học sinh trong lớp.</div>
-          <div class="step">Tick trạng thái: Có mặt, Vắng có phép, Vắng không phép, Đi muộn.</div>
-          <div class="step"><strong>Chủ trung tâm</strong> lọc học viên nghỉ nhiều để nhắc phụ huynh.</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>3. Upload giáo án, bài kiểm tra</h3>
-        <div class="flow">
-          <div class="step"><strong>Chủ trung tâm hoặc giáo viên trưởng</strong> vào menu <b>Materials</b>.</div>
-          <div class="step">Chọn lớp, loại tài liệu: Giáo án, Bài kiểm tra, Worksheet.</div>
-          <div class="step">Upload file PDF, Word, ảnh hoặc file khác.</div>
-          <div class="step"><strong>Giáo viên</strong> vào đúng lớp để xem tài liệu trước khi dạy.</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>4. Upload video/ảnh bài tập về nhà</h3>
-        <div class="flow">
-          <div class="step"><strong>Giáo viên</strong> vào menu <b>Homework</b>.</div>
-          <div class="step">Chọn học viên, lớp, ngày học.</div>
-          <div class="step">Upload ảnh/video bài tập hoặc phần trình bày của học sinh.</div>
-          <div class="step">Thêm nhận xét ngắn: tốt, cần sửa phát âm, chưa hoàn thành, cần phụ huynh hỗ trợ.</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>5. Quản lý điểm số và báo cáo cá nhân hóa</h3>
-        <div class="flow">
-          <div class="step"><strong>Giáo viên</strong> nhập điểm vào menu <b>Scores</b>.</div>
-          <div class="step">Chọn kỹ năng: Listening, Speaking, Reading, Writing, Vocabulary, Grammar.</div>
-          <div class="step">Ghi nhận xét ngắn sau mỗi bài kiểm tra.</div>
-          <div class="step"><strong>Chủ trung tâm</strong> mỗi tháng vào <b>Reports</b> để viết báo cáo cá nhân hóa cho từng học viên.</div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>6. Search học viên ra đủ báo cáo</h3>
-        <div class="flow">
-          <div class="step"><strong>Chủ trung tâm hoặc giáo viên</strong> vào menu <b>Students</b>.</div>
-          <div class="step">Gõ tên học viên vào ô search.</div>
-          <div class="step">Mở hồ sơ học viên để xem điểm danh, điểm số, homework, tài liệu, báo cáo.</div>
-          <div class="step">Dùng thông tin này khi trao đổi với phụ huynh.</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="thiet-lap-appsheet">
-      <h2>5. Cách setup trong AppSheet</h2>
-
-      <div class="grid grid-2">
-        <div class="card">
-          <h3>Bước 1: Tạo Google Sheet</h3>
-          <ol>
-            <li>Tạo file Google Sheet mới.</li>
-            <li>Tạo các tab: Students, Teachers, Classes, Attendance, Teacher_Timesheet, Materials, Homework, Scores, Reports.</li>
-            <li>Điền thử 3 học viên, 1 giáo viên, 1 lớp để test.</li>
+      <article class="workflow">
+        <div class="workflow-copy">
+          <div class="who">Giáo viên</div>
+          <h3>1. Chấm công giáo viên</h3>
+          <ol class="steps">
+            <li>Mở app và đứng ở trang chủ.</li>
+            <li>Bấm ô <strong>Chấm công GV</strong>.</li>
+            <li>Bấm nút <strong>+ Thêm mới</strong> hoặc dấu cộng ở góc phải.</li>
+            <li>Màn hình sẽ hiện form có các ô như: ngày dạy, giáo viên, lớp, giờ vào, giờ ra.</li>
+            <li>Đến đầu buổi học, điền <strong>Giờ vào</strong> hoặc bấm <strong>Check-in</strong> nếu app có nút đó.</li>
+            <li>Cuối buổi, mở lại đúng dòng chấm công đó và điền <strong>Giờ ra</strong> hoặc bấm <strong>Checkout</strong>.</li>
+            <li>Kéo xuống cuối màn hình rồi bấm <strong>Lưu</strong>.</li>
           </ol>
+          <div class="result">
+            Kết quả đúng: trong danh sách sẽ xuất hiện 1 dòng mới có tên giáo viên, ngày dạy và đủ giờ vào, giờ ra.
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Bước 2: Tạo AppSheet app</h3>
-          <ol>
-            <li>Vào AppSheet.</li>
-            <li>Chọn <b>Create → App → Start with existing data</b>.</li>
-            <li>Chọn Google Sheet của trung tâm.</li>
-            <li>Đợi AppSheet tự tạo app.</li>
+        <div class="phone">
+          <div class="screen small">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span>Wi-Fi 88%</span>
+            </div>
+            <div class="appbar">
+              <strong>Chấm công GV</strong>
+              <span>Điền giờ vào và giờ ra</span>
+            </div>
+            <div class="screen-body">
+              <div class="mock-input">Ngày dạy: 21/05/2026</div>
+              <div class="mock-input">Giáo viên: Cô Giang</div>
+              <div class="mock-input">Lớp: Movers 2</div>
+              <div class="mock-row">
+                <div class="mock-input" style="flex:1">Giờ vào: 17:55</div>
+                <div class="mock-input" style="flex:1">Giờ ra: 19:35</div>
+              </div>
+              <div class="mock-row">
+                <div class="mock-button" style="flex:1">Check-in</div>
+                <div class="mock-button alt" style="flex:1">Checkout</div>
+              </div>
+              <div class="mock-button">Lưu chấm công</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="workflow">
+        <div class="workflow-copy">
+          <div class="who">Giáo viên</div>
+          <h3>2. Điểm danh học sinh</h3>
+          <ol class="steps">
+            <li>Từ trang chủ, bấm <strong>Điểm danh HS</strong>.</li>
+            <li>Nếu app hỏi lớp học, chọn đúng lớp đang dạy hôm nay.</li>
+            <li>App sẽ hiện danh sách học sinh trong lớp theo từng dòng.</li>
+            <li>Mỗi học viên, bấm chọn một trạng thái: <strong>Có mặt</strong>, <strong>Đi trễ</strong>, <strong>Vắng</strong>.</li>
+            <li>Nếu học sinh nghỉ có lý do, điền thêm ghi chú ở ô <strong>Ghi chú</strong>.</li>
+            <li>Cuộn xuống cuối màn hình, kiểm tra không còn học sinh nào bị bỏ trống rồi bấm <strong>Lưu</strong>.</li>
           </ol>
+          <div class="result">
+            Kết quả đúng: sau khi lưu, danh sách buổi học hôm nay sẽ hiện đủ trạng thái của từng học viên và chủ trung tâm có thể lọc ra các bạn vắng.
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Bước 3: Tạo liên kết giữa bảng</h3>
-          <p>Trong AppSheet, dùng kiểu dữ liệu <b>Ref</b> để liên kết:</p>
-          <ul>
-            <li>Attendance.student_id → Students.student_id</li>
-            <li>Scores.student_id → Students.student_id</li>
-            <li>Homework.student_id → Students.student_id</li>
-            <li>Classes.teacher_id → Teachers.teacher_id</li>
-          </ul>
+        <div class="phone">
+          <div class="screen">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span>4G 90%</span>
+            </div>
+            <div class="appbar">
+              <strong>Điểm danh HS</strong>
+              <span>Lớp Movers 2 - Thứ Năm</span>
+            </div>
+            <div class="screen-body">
+              <div class="mock-card">
+                <h4>Chọn buổi học</h4>
+                <p>Ngày 21/05/2026 - 18:00</p>
+              </div>
+              <div class="mock-list">
+                <div class="mock-student">
+                  <div>
+                    <strong>Minh An</strong>
+                    <span>STU001</span>
+                  </div>
+                  <div class="mock-pill good">Có mặt</div>
+                </div>
+                <div class="mock-student">
+                  <div>
+                    <strong>Khánh Vy</strong>
+                    <span>STU002</span>
+                  </div>
+                  <div class="mock-pill blue">Đi trễ</div>
+                </div>
+                <div class="mock-student">
+                  <div>
+                    <strong>Gia Hân</strong>
+                    <span>STU003</span>
+                  </div>
+                  <div class="mock-pill red">Vắng</div>
+                </div>
+              </div>
+              <div class="mock-button">Lưu điểm danh</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="workflow">
+        <div class="workflow-copy">
+          <div class="who">Giáo viên hoặc trợ giảng</div>
+          <h3>3. Upload giáo án hoặc bài kiểm tra</h3>
+          <ol class="steps">
+            <li>Từ trang chủ, bấm <strong>Tài liệu</strong>.</li>
+            <li>Bấm <strong>+ Thêm mới</strong>.</li>
+            <li>Ở mục <strong>Loại tài liệu</strong>, chọn <strong>Giáo án</strong> hoặc <strong>Bài kiểm tra</strong>.</li>
+            <li>Điền <strong>Tiêu đề</strong> thật rõ, ví dụ: <code>Movers 2 - Unit 5 - Giáo án</code>.</li>
+            <li>Bấm vào ô <strong>Chọn file</strong>. Điện thoại có thể hiện các lựa chọn như <strong>Ảnh</strong>, <strong>Tệp</strong>, <strong>Drive</strong>.</li>
+            <li>Chọn đúng file rồi quay về app. Nếu cần, điền thêm ghi chú như “dùng cho buổi học ngày 25/05”.</li>
+            <li>Bấm <strong>Lưu</strong>.</li>
+          </ol>
+          <div class="result">
+            Kết quả đúng: trong danh sách tài liệu sẽ có một dòng mới với tên file hoặc tiêu đề, giáo viên khác bấm vào là mở được.
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Bước 4: Tạo màn hình cho từng vai trò</h3>
-          <ul>
-            <li>Teacher Home: Chấm công, điểm danh, homework, nhập điểm.</li>
-            <li>Owner Dashboard: tổng quan, học viên, báo cáo, tài liệu, công giáo viên.</li>
-            <li>Student Detail: toàn bộ thông tin của một học viên.</li>
-          </ul>
+        <div class="phone">
+          <div class="screen small">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span>Wi-Fi 95%</span>
+            </div>
+            <div class="appbar">
+              <strong>Tài liệu</strong>
+              <span>Upload giáo án hoặc bài kiểm tra</span>
+            </div>
+            <div class="screen-body">
+              <div class="mock-input">Loại: Giáo án</div>
+              <div class="mock-input">Tiêu đề: Movers 2 - Unit 5</div>
+              <div class="mock-input">Ghi chú: Dạy ngày 25/05</div>
+              <div class="mock-card">
+                <h4>Chọn file</h4>
+                <p>Browse - Files - Drive - Photos</p>
+              </div>
+              <div class="mock-button alt">Chọn file PDF / Word / ảnh</div>
+              <div class="mock-button">Lưu tài liệu</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="workflow">
+        <div class="workflow-copy">
+          <div class="who">Giáo viên</div>
+          <h3>4. Upload ảnh hoặc video bài tập về nhà</h3>
+          <ol class="steps">
+            <li>Từ trang chủ, bấm <strong>BTVN</strong> hoặc <strong>Homework</strong>.</li>
+            <li>Bấm <strong>+ Thêm mới</strong>.</li>
+            <li>Chọn đúng học viên.</li>
+            <li>Điền tiêu đề ngắn, ví dụ: <code>Video đọc Unit 4</code> hoặc <code>Ảnh vở ngày 21/05</code>.</li>
+            <li>Bấm ô <strong>Chọn ảnh hoặc video</strong>.</li>
+            <li>Nếu điện thoại hỏi quyền truy cập, chọn <strong>Cho phép</strong> để app dùng Ảnh hoặc Camera.</li>
+            <li>Chọn file xong thì điền thêm nhận xét ngắn, ví dụ: “Hoàn thành tốt nhưng cần phát âm lại chữ three”.</li>
+            <li>Bấm <strong>Lưu</strong>.</li>
+          </ol>
+          <div class="result">
+            Kết quả đúng: khi search tên học viên, bạn sẽ nhìn thấy ngay ảnh hoặc video này trong hồ sơ của bé.
+          </div>
+        </div>
+
+        <div class="phone">
+          <div class="screen small">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span>4G 84%</span>
+            </div>
+            <div class="appbar">
+              <strong>Bài tập về nhà</strong>
+              <span>Ảnh hoặc video của học viên</span>
+            </div>
+            <div class="screen-body">
+              <div class="mock-input">Học viên: Minh An</div>
+              <div class="mock-input">Tiêu đề: Video đọc Unit 4</div>
+              <div class="mock-card">
+                <h4>Chọn từ đâu</h4>
+                <p>Camera - Thư viện ảnh - Tệp - Drive</p>
+              </div>
+              <div class="mock-button alt">Chọn ảnh / video</div>
+              <div class="mock-input">Nhận xét: Phát âm tốt, cần nói chậm hơn</div>
+              <div class="mock-button">Lưu bài tập</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="workflow">
+        <div class="workflow-copy">
+          <div class="who">Giáo viên và chủ trung tâm</div>
+          <h3>5. Nhập điểm và viết báo cáo cá nhân hóa</h3>
+          <ol class="steps">
+            <li>Giáo viên mở menu <strong>Điểm số</strong>.</li>
+            <li>Bấm <strong>+ Thêm mới</strong> rồi chọn học viên.</li>
+            <li>Điền tên bài kiểm tra, kỹ năng, điểm đạt, điểm tối đa, ngày chấm và nhận xét ngắn.</li>
+            <li>Bấm <strong>Lưu</strong> để hệ thống ghi điểm.</li>
+            <li>Đến cuối tuần hoặc cuối tháng, chủ trung tâm vào <strong>Tra cứu HV</strong>, gõ tên học viên, mở hồ sơ của bé.</li>
+            <li>Trong hồ sơ, xem các mục điểm số, chuyên cần, bài tập về nhà và ghi chú giáo viên.</li>
+            <li>Mở phần <strong>Báo cáo tháng</strong> hoặc <strong>Reports</strong>, điền 3 ý: điểm mạnh, điểm cần cải thiện, kế hoạch tháng tới.</li>
+            <li>Bấm <strong>Lưu</strong>.</li>
+          </ol>
+          <div class="result">
+            Kết quả đúng: mỗi học viên sẽ có lịch sử điểm rõ ràng và một báo cáo cá nhân hóa có thể dùng để trao đổi với phụ huynh.
+          </div>
+        </div>
+
+        <div class="phone">
+          <div class="screen">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span>Wi-Fi 91%</span>
+            </div>
+            <div class="appbar">
+              <strong>Điểm số và báo cáo</strong>
+              <span>Một hồ sơ học viên hoàn chỉnh</span>
+            </div>
+            <div class="screen-body">
+              <div class="mock-card">
+                <h4>Minh An - STU001</h4>
+                <p>Điểm TB: 8.4 / Chuyên cần: 92%</p>
+              </div>
+              <div class="mock-row">
+                <div class="mock-pill good">Speaking 9.0</div>
+                <div class="mock-pill blue">Reading 8.5</div>
+                <div class="mock-pill">Writing 7.8</div>
+              </div>
+              <div class="mock-card">
+                <h4>Báo cáo tháng</h4>
+                <p>Điểm mạnh: phản xạ nói tốt</p>
+                <p>Cần cải thiện: viết câu dài còn chậm</p>
+                <p>Kế hoạch: luyện viết 2 buổi/tuần</p>
+              </div>
+              <div class="mock-button">Lưu báo cáo</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="workflow">
+        <div class="workflow-copy">
+          <div class="who owner">Chủ trung tâm hoặc giáo viên</div>
+          <h3>6. Search học viên là ra đủ báo cáo của học viên đó</h3>
+          <ol class="steps">
+            <li>Từ trang chủ, bấm <strong>Tra cứu HV</strong> hoặc dùng ô <strong>Search</strong> ở đầu màn hình.</li>
+            <li>Gõ tên học viên. Nếu không nhớ tên đầy đủ, có thể gõ một phần tên, tên phụ huynh hoặc số điện thoại phụ huynh.</li>
+            <li>Danh sách kết quả sẽ hiện ra. Bấm đúng học viên cần xem.</li>
+            <li>Trong hồ sơ học viên, kéo xuống để xem lần lượt: thông tin cơ bản, điểm danh, điểm số, bài tập về nhà, tài liệu liên quan, báo cáo tháng.</li>
+            <li>Nếu đang gọi điện cho phụ huynh, chỉ cần mở đúng hồ sơ này là có đủ dữ liệu để trao đổi.</li>
+          </ol>
+          <div class="result">
+            Kết quả đúng: chủ trung tâm không phải tìm dữ liệu ở nhiều nơi nữa, chỉ cần search một lần là có toàn bộ hồ sơ học viên.
+          </div>
+        </div>
+
+        <div class="phone">
+          <div class="screen">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span>4G 93%</span>
+            </div>
+            <div class="appbar">
+              <strong>Tra cứu học viên</strong>
+              <span>Tìm theo tên hoặc số điện thoại</span>
+            </div>
+            <div class="screen-body">
+              <div class="mock-input">Search: minh an / chị Hương / 090...</div>
+              <div class="mock-list">
+                <div class="mock-student">
+                  <div>
+                    <strong>Minh An</strong>
+                    <span>Phụ huynh: Chị Hương</span>
+                  </div>
+                  <div class="mock-pill good">Mở hồ sơ</div>
+                </div>
+                <div class="mock-student">
+                  <div>
+                    <strong>Minh Khôi</strong>
+                    <span>Phụ huynh: Anh Hải</span>
+                  </div>
+                  <div class="mock-pill blue">Mở hồ sơ</div>
+                </div>
+              </div>
+              <div class="mock-card">
+                <h4>Trong hồ sơ sẽ có</h4>
+                <p>Thông tin liên hệ - Điểm danh - Điểm số - BTVN - Báo cáo tháng</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section" id="chu-trung-tam">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Phần 6</div>
+          <h2>Checklist riêng cho chủ trung tâm khi setup AppSheet</h2>
+        </div>
+        <p>Phần này giúp người quản lý chuẩn bị đúng trước khi đưa app vào dùng thật.</p>
+      </div>
+
+      <div class="owner-plan">
+        <div class="owner-step">
+          <div class="index">1</div>
+          <div>
+            <strong>Tạo nơi lưu dữ liệu gốc</strong>
+            <p>Mở <a href="https://drive.google.com/" target="_blank" rel="noreferrer">Google Drive</a>, tạo một thư mục riêng cho trung tâm, rồi tạo Google Sheet chứa các bảng như <code>Students</code>, <code>Teachers</code>, <code>Classes</code>, <code>Attendance</code>, <code>Scores</code>, <code>Homework</code>.</p>
+          </div>
+        </div>
+
+        <div class="owner-step">
+          <div class="index">2</div>
+          <div>
+            <strong>Tạo app từ AppSheet</strong>
+            <p>Phải làm bước này trên <strong>máy tính</strong> bằng trình duyệt web như Chrome. Vào <a href="https://www.appsheet.com/" target="_blank" rel="noreferrer">AppSheet</a>, đăng nhập, rồi bấm <strong>Make a new app</strong> hoặc <strong>Start with existing data</strong>, sau đó chọn đúng Google Sheet vừa tạo.</p>
+          </div>
+        </div>
+
+        <div class="owner-step">
+          <div class="index">3</div>
+          <div>
+            <strong>Đặt tên menu cho dễ hiểu trên giao diện web</strong>
+            <p>Sau khi app đã được tạo trên máy tính, tiếp tục chỉnh tên menu ngay trên giao diện web. Đừng để tên kỹ thuật như <code>Teacher_Timesheet</code>. Hãy đổi thành <strong>Chấm công GV</strong>, <strong>Điểm danh HS</strong>, <strong>Tài liệu</strong>, <strong>BTVN</strong>, <strong>Điểm số</strong>, <strong>Tra cứu HV</strong>.</p>
+          </div>
+        </div>
+
+        <div class="owner-step">
+          <div class="index">4</div>
+          <div>
+            <strong>Kiểm tra quyền camera, ảnh, file</strong>
+            <p>Thử upload 1 ảnh, 1 video, 1 file PDF trên điện thoại thật. Nếu thao tác được thì giáo viên mới dùng mượt về sau.</p>
+          </div>
+        </div>
+
+        <div class="owner-step">
+          <div class="index">5</div>
+          <div>
+            <strong>Share đúng email giáo viên</strong>
+            <p>Vào phần user hoặc security trong AppSheet, cấp quyền đúng email cho giáo viên và quản lý. Dùng sai email là người dùng sẽ tưởng app bị lỗi.</p>
+          </div>
+        </div>
+
+        <div class="owner-step">
+          <div class="index">6</div>
+          <div>
+            <strong>Gửi một tin nhắn mẫu cho giáo viên</strong>
+            <p>Ví dụ: “Cô mở link này <code>LINK_APP_CUA_TRUNG_TAM</code>, đăng nhập đúng email đã đăng ký, rồi bấm ô Điểm danh HS để điểm danh buổi học hôm nay.”</p>
+          </div>
         </div>
       </div>
 
-      <h3>Gợi ý công thức tạo ID tự động</h3>
-      <p>Trong AppSheet, bạn có thể dùng công thức này cho cột ID:</p>
-      <pre class="code">UNIQUEID()</pre>
-
-      <h3>Gợi ý status cho điểm danh</h3>
-      <pre class="code">Present
-Absent with permission
-Absent without permission
-Late</pre>
-    </section>
-
-    <section id="van-hanh">
-      <h2>6. Quy trình vận hành hằng tuần</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Thời điểm</th>
-              <th>Giáo viên</th>
-              <th>Chủ trung tâm</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Trước buổi học</td>
-              <td>Check-in, xem giáo án, chuẩn bị bài.</td>
-              <td>Kiểm tra lịch lớp, tài liệu đã sẵn sàng chưa.</td>
-            </tr>
-            <tr>
-              <td>Trong buổi học</td>
-              <td>Điểm danh, ghi chú học viên cần chú ý.</td>
-              <td>Theo dõi lớp nào đã điểm danh.</td>
-            </tr>
-            <tr>
-              <td>Sau buổi học</td>
-              <td>Nhập điểm, upload homework, checkout.</td>
-              <td>Kiểm tra thiếu dữ liệu, nhắc giáo viên bổ sung.</td>
-            </tr>
-            <tr>
-              <td>Cuối tuần</td>
-              <td>Cập nhật nhận xét học viên.</td>
-              <td>Xem học viên nghỉ nhiều, điểm giảm, chưa nộp bài.</td>
-            </tr>
-            <tr>
-              <td>Cuối tháng</td>
-              <td>Bổ sung nhận xét kỹ năng.</td>
-              <td>Viết báo cáo cá nhân hóa gửi phụ huynh.</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="note">
+        <strong>Kinh nghiệm thực tế:</strong> nếu chủ trung tâm thử tạo app ngay trên điện thoại mà không thấy tạo được, đó là chuyện bình thường.
+        Hãy chuyển sang máy tính và mở AppSheet trên trình duyệt web để làm phần setup. Sau khi setup xong, giáo viên mới quay lại điện thoại để dùng hằng ngày.
       </div>
+
+      <table class="info-table" style="margin-top: 20px;">
+        <thead>
+          <tr>
+            <th>Việc cần kiểm</th>
+            <th>Dấu hiệu đã ổn</th>
+            <th>Nếu chưa ổn thì làm gì</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Đăng nhập</td>
+            <td>Giáo viên thấy đúng trang chủ của trung tâm</td>
+            <td>Kiểm tra lại email được cấp quyền</td>
+          </tr>
+          <tr>
+            <td>Tạo app ban đầu</td>
+            <td>Tạo được app và nhìn thấy màn hình chỉnh sửa app</td>
+            <td>Chuyển sang máy tính, mở AppSheet trên web, không làm bước này trên điện thoại</td>
+          </tr>
+          <tr>
+            <td>Upload ảnh/video</td>
+            <td>Chọn được file và bấm lưu thành công</td>
+            <td>Cho phép quyền Ảnh, Camera, Tệp</td>
+          </tr>
+          <tr>
+            <td>Search học viên</td>
+            <td>Gõ tên là ra đúng hồ sơ</td>
+            <td>Kiểm tra dữ liệu tên, số điện thoại trong sheet gốc</td>
+          </tr>
+          <tr>
+            <td>Điểm danh và chấm công</td>
+            <td>Có dòng dữ liệu mới sau khi bấm lưu</td>
+            <td>Kiểm tra xem người dùng đã bấm Save chưa</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
-    <section id="quy-tac">
-      <h2>7. Quy tắc để hệ thống không bị rối</h2>
-      <div class="grid grid-2">
-        <div class="card">
-          <h3>Nên làm</h3>
-          <ul>
-            <li>Dùng mã ID cho học viên, giáo viên, lớp.</li>
-            <li>Mỗi dữ liệu chỉ nhập ở một nơi duy nhất.</li>
-            <li>Giáo viên bắt buộc điểm danh ngay trong buổi học.</li>
-            <li>Ảnh/video homework phải upload vào app.</li>
-            <li>Cuối tuần chủ trung tâm kiểm tra dữ liệu thiếu.</li>
-          </ul>
+    <section class="section" id="su-co">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Phần 7</div>
+          <h2>Sự cố thường gặp và cách nói lại cho người ít rành công nghệ</h2>
+        </div>
+        <p>Đây là phần giúp giảm số cuộc gọi “chị ơi app hỏng rồi”.</p>
+      </div>
+
+      <div class="faq">
+        <div class="faq-item">
+          <strong>1. Bấm vào link nhưng màn hình trắng hoặc quay vòng mãi</strong>
+          <p>Yêu cầu người dùng tắt app đi, mở lại bằng Chrome hoặc Safari, kiểm tra Wi-Fi hoặc 4G. Nếu vẫn lỗi, cho họ chụp ảnh màn hình gửi lại để xem đang đứng ở bước nào.</p>
         </div>
 
-        <div class="card">
-          <h3>Không nên làm</h3>
-          <ul>
-            <li>Không lưu điểm rải rác ở nhiều file Excel.</li>
-            <li>Không gửi homework qua Zalo rồi để đó.</li>
-            <li>Không dùng tên học viên làm mã chính.</li>
-            <li>Không cho quá nhiều người sửa cấu trúc Google Sheet.</li>
-            <li>Không thêm quá nhiều tính năng khi chưa vận hành ổn.</li>
-          </ul>
+        <div class="faq-item">
+          <strong>2. Không upload được ảnh, video hoặc file</strong>
+          <p>Thường là điện thoại chưa cấp quyền Ảnh, Camera hoặc Tệp. Hướng dẫn họ bấm <strong>Cho phép</strong> khi máy hỏi. Nếu lỡ bấm từ chối, vào phần Cài đặt của điện thoại để bật lại quyền.</p>
+        </div>
+
+        <div class="faq-item">
+          <strong>3. Không thấy lớp mình dạy hoặc không thấy tên học viên</strong>
+          <p>Khả năng cao là đang đăng nhập sai email hoặc dữ liệu lớp chưa được gán đúng trong AppSheet. Kiểm tra lại tài khoản đang đăng nhập trước rồi mới kiểm tra cấu hình app.</p>
+        </div>
+
+        <div class="faq-item">
+          <strong>4. Đã nhập xong nhưng dữ liệu không thấy đâu</strong>
+          <p>Hỏi lại ngay một câu: “Cô đã bấm nút Lưu ở cuối màn hình chưa?” Đây là lỗi phổ biến nhất với người mới dùng AppSheet.</p>
+        </div>
+
+        <div class="faq-item">
+          <strong>5. Không search ra học viên</strong>
+          <p>Thử gõ ít ký tự hơn, gõ tên phụ huynh hoặc số điện thoại. Nếu vẫn không ra, kiểm tra lại dữ liệu gốc trong Google Sheet xem học viên đó đã được tạo chưa.</p>
         </div>
       </div>
-    </section>
 
-    <section id="mo-rong">
-      <h2>8. Nếu muốn nâng cấp sau này</h2>
-      <div class="card">
-        <p>Sau khi vận hành ổn, bạn có thể thêm một lớp automation nhỏ bằng Google Apps Script hoặc n8n:</p>
-        <ul>
-          <li>Tự nhắc giáo viên nếu quên checkout.</li>
-          <li>Tự gửi báo cáo học viên cho phụ huynh mỗi tháng.</li>
-          <li>Tự cảnh báo học viên nghỉ quá 2 buổi/tháng.</li>
-          <li>Tự tạo nhận xét AI dựa trên điểm số và chuyên cần.</li>
-        </ul>
-        <p>Nhưng giai đoạn đầu, chỉ cần AppSheet + Google Sheets + Google Drive là đủ.</p>
+      <div class="success">
+        <strong>Câu nhắc đơn giản nên dùng với giáo viên:</strong> “Cô cứ mở app, chọn đúng ô công việc, điền xong nhớ kéo xuống cuối và bấm Lưu. Nếu máy hỏi quyền thì bấm Cho phép.”
       </div>
     </section>
 
     <div class="footer">
-      <strong>Ghi chú:</strong> File này là bản hướng dẫn nội bộ. Bạn có thể chỉnh sửa tên menu, tên sheet và workflow cho phù hợp với trung tâm của mình.
+      <strong>Ghi chú:</strong> file này là bản cẩm nang nội bộ để gửi cho giáo viên và chủ trung tâm.
+      Nếu muốn, bước tiếp theo mình có thể làm tiếp cho bạn 1 bản riêng tối ưu để in PDF, hoặc chèn ảnh chụp màn hình thật của app vào từng bước.
     </div>
   </main>
 </body>
