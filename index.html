@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hướng dẫn dùng Google AppSheet cho trung tâm gia sư tiếng Anh</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --ink: #172033;
+      --muted: #5f6b7a;
+      --brand: #2563eb;
+      --brand-soft: #e8f0ff;
+      --green: #16a34a;
+      --orange: #f97316;
+      --purple: #7c3aed;
+      --red: #dc2626;
+      --border: #e5e7eb;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 320px);
+      line-height: 1.6;
+    }
+
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 18px 80px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: center;
+      padding: 38px 0 28px;
+    }
+
+    .badge {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--brand-soft);
+      color: var(--brand);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.05;
+      margin: 18px 0 14px;
+      letter-spacing: -0.04em;
+    }
+
+    h2 {
+      font-size: 30px;
+      margin: 44px 0 16px;
+      letter-spacing: -0.025em;
+    }
+
+    h3 {
+      font-size: 21px;
+      margin: 24px 0 10px;
+    }
+
+    p { margin: 8px 0; color: var(--muted); }
+
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .quick-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .quick-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px;
+      background: #f8fafc;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+    }
+
+    .num {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .role {
+      border-left: 6px solid var(--brand);
+    }
+
+    .role.teacher { border-left-color: var(--green); }
+    .role.owner { border-left-color: var(--purple); }
+
+    .label {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+
+    .teacher .label { color: var(--green); }
+    .owner .label { color: var(--purple); }
+
+    ul, ol {
+      padding-left: 22px;
+      margin: 10px 0 0;
+    }
+
+    li { margin: 7px 0; color: var(--muted); }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      font-size: 14px;
+      color: #334155;
+    }
+
+    td { color: var(--muted); }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 16px 16px 58px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .warning {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-left: 6px solid var(--orange);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin: 18px 0;
+    }
+
+    .success {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 6px solid var(--green);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin: 18px 0;
+    }
+
+    .code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 14px;
+      border-radius: 14px;
+      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 10px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nav a {
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: #f8fafc;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .footer {
+      margin-top: 56px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 820px) {
+      .hero, .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .container { padding-top: 16px; }
+      h2 { font-size: 26px; }
+    }
+
+    @media print {
+      .nav { display: none; }
+      body { background: #fff; }
+      .card, .hero-card, .table-wrap { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div class="nav-inner">
+      <a href="#tong-quan">Tổng quan</a>
+      <a href="#cau-truc">Cấu trúc dữ liệu</a>
+      <a href="#chu-trung-tam">Chủ trung tâm</a>
+      <a href="#giao-vien">Giáo viên</a>
+      <a href="#6-nghiep-vu">6 nghiệp vụ</a>
+      <a href="#van-hanh">Vận hành hằng tuần</a>
+    </div>
+  </div>
+
+  <main class="container">
+    <section class="hero" id="tong-quan">
+      <div>
+        <span class="badge">Google AppSheet + Google Sheets + Google Drive</span>
+        <h1>Hướng dẫn quản lý trung tâm gia sư tiếng Anh trên một nền tảng</h1>
+        <p>
+          Tài liệu này hướng dẫn cách dùng Google AppSheet để quản lý 6 việc:
+          chấm công giáo viên, điểm danh học sinh, giáo án/bài kiểm tra, video/ảnh bài tập về nhà,
+          điểm số/báo cáo cá nhân hóa và tra cứu toàn bộ hồ sơ học viên.
+        </p>
+        <div class="success">
+          <strong>Mục tiêu:</strong> giáo viên chỉ cần mở 1 app để thao tác; chủ trung tâm xem được dữ liệu tập trung, không bị rối bởi Zalo, Excel rời rạc hoặc folder Drive lộn xộn.
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="label">Kết quả sau khi setup</div>
+        <div class="quick-list">
+          <div class="quick-item"><span class="num">1</span><div><strong>App mobile/web</strong><br><p>Giáo viên mở AppSheet để chấm công, điểm danh, upload bài.</p></div></div>
+          <div class="quick-item"><span class="num">2</span><div><strong>Google Sheets là database</strong><br><p>Dữ liệu học viên, lớp, điểm, chuyên cần được lưu tập trung.</p></div></div>
+          <div class="quick-item"><span class="num">3</span><div><strong>Google Drive là kho file</strong><br><p>Giáo án, bài kiểm tra, ảnh/video homework tự nằm trong Drive.</p></div></div>
+          <div class="quick-item"><span class="num">4</span><div><strong>Search học viên</strong><br><p>Gõ tên học viên là xem được hồ sơ, điểm, buổi học, homework, nhận xét.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cau-truc">
+      <h2>1. Cấu trúc nền tảng nên dùng</h2>
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Google Sheets</h3>
+          <p>Làm nơi lưu dữ liệu chính: học viên, giáo viên, lớp, điểm danh, điểm số, báo cáo.</p>
+        </div>
+        <div class="card">
+          <h3>Google Drive</h3>
+          <p>Làm nơi lưu file: giáo án, bài kiểm tra, ảnh/video bài tập về nhà.</p>
+        </div>
+        <div class="card">
+          <h3>Google AppSheet</h3>
+          <p>Làm app quản lý duy nhất cho giáo viên và chủ trung tâm.</p>
+        </div>
+      </div>
+
+      <h3>Các sheet cần tạo</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Sheet</th>
+              <th>Mục đích</th>
+              <th>Cột gợi ý</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="pill">Students</span></td>
+              <td>Danh sách học viên</td>
+              <td>student_id, name, class_id, parent_name, parent_phone, status, note</td>
+            </tr>
+            <tr>
+              <td><span class="pill">Teachers</span></td>
+              <td>Danh sách giáo viên</td>
+              <td>teacher_id, name, phone, email, status</td>
+            </tr>
+            <tr>
+              <td><span class="pill">Classes</span></td>
+              <td>Danh sách lớp</td>
+              <td>class_id, class_name, teacher_id, schedule, room, status</td>
+            </tr>
+            <tr>
+              <td><span class="pill">Teacher_Timesheet</span></td>
+              <td>Chấm công giáo viên</td>
+              <td>date, teacher_id, class_id, checkin_time, checkout_time, note</td>
+            </tr>
+            <tr>
+              <td><span class="pill">Attendance</span></td>
+              <td>Điểm danh học sinh</td>
+              <td>date, class_id, student_id, status, reason, teacher_note</td>
+            </tr>
+            <tr>
+              <td><span class="pill">Materials</span></td>
+              <td>Giáo án, bài kiểm tra</td>
+              <td>date, class_id, title, type, file, uploaded_by</td>
+            </tr>
+            <tr>
+              <td><span class="pill">Homework</span></td>
+              <td>Ảnh/video bài tập về nhà</td>
+              <td>date, student_id, class_id, file, teacher_comment, status</td>
+            </tr>
+            <tr>
+              <td><span class="pill">Scores</span></td>
+              <td>Điểm số</td>
+              <td>date, student_id, class_id, skill, score, max_score, comment</td>
+            </tr>
+            <tr>
+              <td><span class="pill">Reports</span></td>
+              <td>Báo cáo cá nhân hóa</td>
+              <td>month, student_id, strengths, weaknesses, action_plan, owner_note</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="warning">
+        <strong>Nguyên tắc quan trọng:</strong> mỗi học viên, giáo viên, lớp nên có một mã riêng như <b>STU001</b>, <b>TEA001</b>, <b>CLS001</b>. Không dùng tên làm khóa chính vì dễ trùng tên và sai chính tả.
+      </div>
+    </section>
+
+    <section id="chu-trung-tam">
+      <h2>2. Chủ trung tâm cần làm gì?</h2>
+      <div class="grid grid-2">
+        <div class="card role owner">
+          <div class="label">Setup ban đầu</div>
+          <ol>
+            <li>Tạo một Google Sheet tên: <b>English Center Management</b>.</li>
+            <li>Tạo các sheet theo cấu trúc ở phần trên.</li>
+            <li>Vào <a href="https://www.appsheet.com/" target="_blank">AppSheet</a> → chọn <b>Make a new app</b>.</li>
+            <li>Chọn nguồn dữ liệu là Google Sheet vừa tạo.</li>
+            <li>Để AppSheet tự sinh app ban đầu.</li>
+            <li>Kiểm tra từng bảng và chỉnh kiểu dữ liệu: Name, Enum, Ref, File, Image, Video, DateTime.</li>
+          </ol>
+        </div>
+
+        <div class="card role owner">
+          <div class="label">Việc làm hằng ngày</div>
+          <ol>
+            <li>Xem danh sách giáo viên đã chấm công.</li>
+            <li>Kiểm tra lớp nào chưa điểm danh.</li>
+            <li>Xem học viên nghỉ nhiều, điểm thấp hoặc chưa nộp bài.</li>
+            <li>Duyệt giáo án/bài kiểm tra giáo viên upload.</li>
+            <li>Cập nhật nhận xét tổng quan vào báo cáo tháng.</li>
+          </ol>
+        </div>
+      </div>
+
+      <h3>Màn hình chủ trung tâm nên có trong AppSheet</h3>
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Dashboard tổng quan</h3>
+          <p>Hiển thị số buổi học, số học viên vắng, số bài homework, số báo cáo cần xử lý.</p>
+        </div>
+        <div class="card">
+          <h3>Student Profile</h3>
+          <p>Tra cứu từng học viên và xem toàn bộ lịch sử học tập.</p>
+        </div>
+        <div class="card">
+          <h3>Teacher Timesheet</h3>
+          <p>Xem giáo viên nào đã check-in, checkout, lớp nào đã dạy.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="giao-vien">
+      <h2>3. Giáo viên cần làm gì?</h2>
+      <div class="grid grid-2">
+        <div class="card role teacher">
+          <div class="label">Trước buổi học</div>
+          <ol>
+            <li>Mở app AppSheet trên điện thoại.</li>
+            <li>Chọn lớp mình dạy hôm nay.</li>
+            <li>Bấm <b>Check-in</b> để chấm công.</li>
+            <li>Mở phần <b>Materials</b> để xem giáo án hoặc bài kiểm tra cần dùng.</li>
+          </ol>
+        </div>
+
+        <div class="card role teacher">
+          <div class="label">Trong và sau buổi học</div>
+          <ol>
+            <li>Vào <b>Attendance</b> để điểm danh học sinh.</li>
+            <li>Nhập điểm nếu có bài kiểm tra.</li>
+            <li>Upload ảnh/video bài tập về nhà của học sinh.</li>
+            <li>Ghi nhận xét ngắn cho học viên cần chú ý.</li>
+            <li>Bấm <b>Checkout</b> sau khi dạy xong.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="success">
+        <strong>Quy tắc cho giáo viên:</strong> không gửi ảnh/video homework qua Zalo cá nhân nếu trung tâm đã dùng AppSheet. Tất cả dữ liệu cần đưa vào app để sau này tìm lại được.
+      </div>
+    </section>
+
+    <section id="6-nghiep-vu">
+      <h2>4. Hướng dẫn cụ thể cho 6 đầu việc</h2>
+
+      <div class="card">
+        <h3>1. Chấm công giáo viên</h3>
+        <div class="flow">
+          <div class="step"><strong>Giáo viên</strong> mở app → chọn menu <b>Chấm công GV</b>.</div>
+          <div class="step">Chọn lớp đang dạy, bấm <b>Check-in</b>. App tự ghi thời gian.</div>
+          <div class="step">Cuối buổi bấm <b>Checkout</b>.</div>
+          <div class="step"><strong>Chủ trung tâm</strong> xem bảng Teacher_Timesheet để tính công.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>2. Điểm danh học sinh</h3>
+        <div class="flow">
+          <div class="step"><strong>Giáo viên</strong> chọn lớp hôm nay.</div>
+          <div class="step">App hiện danh sách học sinh trong lớp.</div>
+          <div class="step">Tick trạng thái: Có mặt, Vắng có phép, Vắng không phép, Đi muộn.</div>
+          <div class="step"><strong>Chủ trung tâm</strong> lọc học viên nghỉ nhiều để nhắc phụ huynh.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>3. Upload giáo án, bài kiểm tra</h3>
+        <div class="flow">
+          <div class="step"><strong>Chủ trung tâm hoặc giáo viên trưởng</strong> vào menu <b>Materials</b>.</div>
+          <div class="step">Chọn lớp, loại tài liệu: Giáo án, Bài kiểm tra, Worksheet.</div>
+          <div class="step">Upload file PDF, Word, ảnh hoặc file khác.</div>
+          <div class="step"><strong>Giáo viên</strong> vào đúng lớp để xem tài liệu trước khi dạy.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>4. Upload video/ảnh bài tập về nhà</h3>
+        <div class="flow">
+          <div class="step"><strong>Giáo viên</strong> vào menu <b>Homework</b>.</div>
+          <div class="step">Chọn học viên, lớp, ngày học.</div>
+          <div class="step">Upload ảnh/video bài tập hoặc phần trình bày của học sinh.</div>
+          <div class="step">Thêm nhận xét ngắn: tốt, cần sửa phát âm, chưa hoàn thành, cần phụ huynh hỗ trợ.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>5. Quản lý điểm số và báo cáo cá nhân hóa</h3>
+        <div class="flow">
+          <div class="step"><strong>Giáo viên</strong> nhập điểm vào menu <b>Scores</b>.</div>
+          <div class="step">Chọn kỹ năng: Listening, Speaking, Reading, Writing, Vocabulary, Grammar.</div>
+          <div class="step">Ghi nhận xét ngắn sau mỗi bài kiểm tra.</div>
+          <div class="step"><strong>Chủ trung tâm</strong> mỗi tháng vào <b>Reports</b> để viết báo cáo cá nhân hóa cho từng học viên.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>6. Search học viên ra đủ báo cáo</h3>
+        <div class="flow">
+          <div class="step"><strong>Chủ trung tâm hoặc giáo viên</strong> vào menu <b>Students</b>.</div>
+          <div class="step">Gõ tên học viên vào ô search.</div>
+          <div class="step">Mở hồ sơ học viên để xem điểm danh, điểm số, homework, tài liệu, báo cáo.</div>
+          <div class="step">Dùng thông tin này khi trao đổi với phụ huynh.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="thiet-lap-appsheet">
+      <h2>5. Cách setup trong AppSheet</h2>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Bước 1: Tạo Google Sheet</h3>
+          <ol>
+            <li>Tạo file Google Sheet mới.</li>
+            <li>Tạo các tab: Students, Teachers, Classes, Attendance, Teacher_Timesheet, Materials, Homework, Scores, Reports.</li>
+            <li>Điền thử 3 học viên, 1 giáo viên, 1 lớp để test.</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <h3>Bước 2: Tạo AppSheet app</h3>
+          <ol>
+            <li>Vào AppSheet.</li>
+            <li>Chọn <b>Create → App → Start with existing data</b>.</li>
+            <li>Chọn Google Sheet của trung tâm.</li>
+            <li>Đợi AppSheet tự tạo app.</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <h3>Bước 3: Tạo liên kết giữa bảng</h3>
+          <p>Trong AppSheet, dùng kiểu dữ liệu <b>Ref</b> để liên kết:</p>
+          <ul>
+            <li>Attendance.student_id → Students.student_id</li>
+            <li>Scores.student_id → Students.student_id</li>
+            <li>Homework.student_id → Students.student_id</li>
+            <li>Classes.teacher_id → Teachers.teacher_id</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Bước 4: Tạo màn hình cho từng vai trò</h3>
+          <ul>
+            <li>Teacher Home: Chấm công, điểm danh, homework, nhập điểm.</li>
+            <li>Owner Dashboard: tổng quan, học viên, báo cáo, tài liệu, công giáo viên.</li>
+            <li>Student Detail: toàn bộ thông tin của một học viên.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Gợi ý công thức tạo ID tự động</h3>
+      <p>Trong AppSheet, bạn có thể dùng công thức này cho cột ID:</p>
+      <pre class="code">UNIQUEID()</pre>
+
+      <h3>Gợi ý status cho điểm danh</h3>
+      <pre class="code">Present
+Absent with permission
+Absent without permission
+Late</pre>
+    </section>
+
+    <section id="van-hanh">
+      <h2>6. Quy trình vận hành hằng tuần</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Thời điểm</th>
+              <th>Giáo viên</th>
+              <th>Chủ trung tâm</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Trước buổi học</td>
+              <td>Check-in, xem giáo án, chuẩn bị bài.</td>
+              <td>Kiểm tra lịch lớp, tài liệu đã sẵn sàng chưa.</td>
+            </tr>
+            <tr>
+              <td>Trong buổi học</td>
+              <td>Điểm danh, ghi chú học viên cần chú ý.</td>
+              <td>Theo dõi lớp nào đã điểm danh.</td>
+            </tr>
+            <tr>
+              <td>Sau buổi học</td>
+              <td>Nhập điểm, upload homework, checkout.</td>
+              <td>Kiểm tra thiếu dữ liệu, nhắc giáo viên bổ sung.</td>
+            </tr>
+            <tr>
+              <td>Cuối tuần</td>
+              <td>Cập nhật nhận xét học viên.</td>
+              <td>Xem học viên nghỉ nhiều, điểm giảm, chưa nộp bài.</td>
+            </tr>
+            <tr>
+              <td>Cuối tháng</td>
+              <td>Bổ sung nhận xét kỹ năng.</td>
+              <td>Viết báo cáo cá nhân hóa gửi phụ huynh.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="quy-tac">
+      <h2>7. Quy tắc để hệ thống không bị rối</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Nên làm</h3>
+          <ul>
+            <li>Dùng mã ID cho học viên, giáo viên, lớp.</li>
+            <li>Mỗi dữ liệu chỉ nhập ở một nơi duy nhất.</li>
+            <li>Giáo viên bắt buộc điểm danh ngay trong buổi học.</li>
+            <li>Ảnh/video homework phải upload vào app.</li>
+            <li>Cuối tuần chủ trung tâm kiểm tra dữ liệu thiếu.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Không nên làm</h3>
+          <ul>
+            <li>Không lưu điểm rải rác ở nhiều file Excel.</li>
+            <li>Không gửi homework qua Zalo rồi để đó.</li>
+            <li>Không dùng tên học viên làm mã chính.</li>
+            <li>Không cho quá nhiều người sửa cấu trúc Google Sheet.</li>
+            <li>Không thêm quá nhiều tính năng khi chưa vận hành ổn.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="mo-rong">
+      <h2>8. Nếu muốn nâng cấp sau này</h2>
+      <div class="card">
+        <p>Sau khi vận hành ổn, bạn có thể thêm một lớp automation nhỏ bằng Google Apps Script hoặc n8n:</p>
+        <ul>
+          <li>Tự nhắc giáo viên nếu quên checkout.</li>
+          <li>Tự gửi báo cáo học viên cho phụ huynh mỗi tháng.</li>
+          <li>Tự cảnh báo học viên nghỉ quá 2 buổi/tháng.</li>
+          <li>Tự tạo nhận xét AI dựa trên điểm số và chuyên cần.</li>
+        </ul>
+        <p>Nhưng giai đoạn đầu, chỉ cần AppSheet + Google Sheets + Google Drive là đủ.</p>
+      </div>
+    </section>
+
+    <div class="footer">
+      <strong>Ghi chú:</strong> File này là bản hướng dẫn nội bộ. Bạn có thể chỉnh sửa tên menu, tên sheet và workflow cho phù hợp với trung tâm của mình.
+    </div>
+  </main>
+</body>
+</html>
